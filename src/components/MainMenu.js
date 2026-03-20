@@ -1,6 +1,5 @@
 export default class MainMenu {
     constructor(page) {
-        this.page = page;
         this.categoriesButton = page.getByRole("button", {
             name: /Categories|Категории/i,
         }).describe("Main Navigation Categories Button");

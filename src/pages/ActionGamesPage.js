@@ -6,10 +6,6 @@ export default class ActionGamesPage extends BasePage {
     constructor(page) {
         super(page);
         this.topSellersTab = page.getByText(CONSTANTS.TABS.TOP_SELLERS, { exact: true }).describe("Top Sellers Category Sub-Tab");
-        this.ageYearSelect = page.locator("#ageYear").describe("Age Gate Year Overlay Select");
-        this.ageDaySelect = page.locator("#ageDay").describe("Age Gate Day Overlay Select");
-        this.ageMonthSelect = page.locator("#ageMonth").describe("Age Gate Month Overlay Select");
-        this.ageViewPageBtn = page.locator('a.btn_medium:has-text("View Page"), #view_product_page_btn').describe("Age Gate View Page Overlay Button");
         this.discountedGames = page.locator('div.ImpressionTrackedElement:has(.HeroCapsuleImageContainer):has(.StoreSalePriceWidgetContainer.Discounted)').describe("Top Sellers Discounted Items List");
     }
 
@@ -36,29 +32,6 @@ export default class ActionGamesPage extends BasePage {
         // Steam rarely hits true network idle
         // Wait for the new content to render instead.
         await this.page.waitForLoadState(CONSTANTS.TIMEOUTS.DOM_LOAD);
-    }
-
-    async handleAgeGates() {
-        // Wait a moment for potential redirects to agecheck pages
-        await this.page.waitForLoadState(CONSTANTS.TIMEOUTS.DOM_LOAD);
-
-        if (this.page.url().includes("agecheck")) {
-            // AgeCheck 1: Dropdown-based verification
-            if (await this.ageYearSelect.isVisible()) {
-                await this.ageDaySelect.selectOption({ value: "1" });
-                await this.ageMonthSelect.selectOption({ index: 1 }); // January
-                await this.ageYearSelect.selectOption({ value: CONSTANTS.AGE_GATE.DEFAULT_YEAR });
-                await this.ageViewPageBtn.click();
-                await this.waitForPageLoad();
-                return;
-            }
-
-            // AgeCheck 2: Simple 'View Page' or 'Continue' button verification
-            if (await this.ageViewPageBtn.isVisible()) {
-                await this.ageViewPageBtn.click();
-                await this.waitForPageLoad();
-            }
-        }
     }
 
     async findGameWithMaxDiscount() {
@@ -135,9 +108,6 @@ export default class ActionGamesPage extends BasePage {
         // Navigate explicitly to avoid target="_blank" spawning a new tab
         await this.page.goto(bestGameData.url);
         await this.waitForPageLoad();
-
-        // Handle possible Age Gate screens
-        await this.handleAgeGates();
 
         return game;
     }
