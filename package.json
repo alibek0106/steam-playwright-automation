@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "scripts": {
     "test": "playwright test",
     "postinstall": "playwright install chromium firefox"
