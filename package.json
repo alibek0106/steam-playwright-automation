@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "playwright test",
+    "postinstall": "playwright install chromium firefox"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "eslint": "^10.0.3"
+  }
+}
