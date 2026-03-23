@@ -13,7 +13,7 @@ test.describe('Steam Store - Download Installer', () => {
     });
 
     await test.step('Click the "Install Steam" link', async () => {
-      await installPage.clickInstallSteamLink();
+      await homePage.clickInstallSteamLink();
     });
 
     let download;
