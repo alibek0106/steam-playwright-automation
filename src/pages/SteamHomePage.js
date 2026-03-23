@@ -1,15 +1,15 @@
-import BasePage from "./BasePage.js";
-import MainMenu from "../components/MainMenu.js";
-import { CONSTANTS } from "../data/constants.js";
+import BasePage from './BasePage';
+import MainMenu from '../components/MainMenu';
+import { CONSTANTS } from '../data/constants';
 
 export default class SteamHomePage extends BasePage {
-    constructor(page) {
-        super(page);
-        this.menu = new MainMenu(page);
-    }
+  constructor(page) {
+    super(page);
+    this.menu = new MainMenu(page);
+  }
 
-    async navigate() {
-        await this.page.goto(CONSTANTS.URLS.BASE_URL);
-        await this.waitForPageLoad();
-    }
+  async navigate() {
+    await this.page.goto(CONSTANTS.URLS.BASE_URL);
+    await this.waitForPageLoad();
+  }
 }
